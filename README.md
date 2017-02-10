@@ -27,3 +27,19 @@ getCalendar(CALENDAR_URL)
     .then(map(transforms.addDurationInHours))
     .then(utils.tapLog);
 ```
+
+API
+===
+
+The functions are exposed in groups:
+
+```js
+const icalUtils = require('ical-utils');
+// icalUtils
+//    .getCalendar = () => {...}
+//    .filters = {...}
+//    .transforms = {...}
+//    .utils = {...}
+```
+
+View the source for details of these areas.

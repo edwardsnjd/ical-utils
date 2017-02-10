@@ -5,56 +5,102 @@ const {selectSummary,fieldToMoment,fieldsToMoments,addDurationInHours,} = requir
 
 // SAMPLE DATA
 
-const startDate = new Date(0);
-const endDate = new Date(1000 * 60 * 60);
-
 const SAMPLE_EVENTS = {
-    ical: {
-        type: 'VEVENT',
-        params: [],
-        start: startDate,
-        end: endDate,
-        dtstamp: '20170210T052758Z',
-        uid: 'foobar123',
-        created: '20170209T003751Z',
-        description: 'A description',
-        'last-modified': '20170209T085207Z',
-        location: '',
-        sequence: '0',
-        status: 'CONFIRMED',
-        summary: 'A summary',
-        transparency: 'OPAQUE',
-        'APPLE-TRAVEL-ADVISORY-BEHAVIOR': 'AUTOMATIC',
-        'miscid': {
-            type: 'VALARM',
+    ical: [
+        {
+            type: 'VEVENT',
             params: [],
-            action: 'NONE',
-            uid: 'miscid',
-        }
-    },
-    summary: {
-        start: startDate,
-        end: endDate,
-        summary: 'A summary',
-        description: 'A description',
-    },
+            start: new Date(0),
+            end: new Date(1000 * 60 * 60),
+            dtstamp: '20170210T052758Z',
+            uid: 'foobar123',
+            created: '20170209T003751Z',
+            description: 'Description 1',
+            'last-modified': '20170209T085207Z',
+            location: '',
+            sequence: '0',
+            status: 'CONFIRMED',
+            summary: 'Summary 1',
+            transparency: 'OPAQUE',
+            'APPLE-TRAVEL-ADVISORY-BEHAVIOR': 'AUTOMATIC',
+            'miscid': {
+                type: 'VALARM',
+                params: [],
+                action: 'NONE',
+                uid: 'miscid',
+            }
+        },
+        {
+            type: 'VEVENT',
+            params: [],
+            start: new Date(9000),
+            end: new Date(9000 + 1000 * 60 * 60),
+            dtstamp: '20170210T052758Z',
+            uid: 'foobar123',
+            created: '20170209T003751Z',
+            description: 'Description 2',
+            'last-modified': '20170209T085207Z',
+            location: '',
+            sequence: '0',
+            status: 'CONFIRMED',
+            summary: 'Summary 2',
+            transparency: 'OPAQUE',
+            'APPLE-TRAVEL-ADVISORY-BEHAVIOR': 'AUTOMATIC',
+            'miscid': {
+                type: 'VALARM',
+                params: [],
+                action: 'NONE',
+                uid: 'miscid',
+            }
+        },
+    ],
+    summary: [
+        {
+            start: new Date(0),
+            end: new Date(1000 * 60 * 60),
+            summary: 'Summary 1',
+            description: 'Description 1',
+        },
+        {
+            start: new Date(9000),
+            end: new Date(9000 + 1000 * 60 * 60),
+            summary: 'Summary 2',
+            description: 'Description 2',
+        },
+    ],
 }
 
 // TESTS
 
 test('transforms.selectSummary - extracts correct fields', t => {
-    t.deepEqual(selectSummary(SAMPLE_EVENTS.ical), SAMPLE_EVENTS.summary);
+    const results = SAMPLE_EVENTS.ical.map(selectSummary);
+    t.deepEqual(results, SAMPLE_EVENTS.summary);
 });
 
 test('transforms.fieldToMoment - converts date to moment', t => {
-    const result = fieldToMoment('start')(SAMPLE_EVENTS.summary);
-    t.true(moment.isMoment(result.start));
+    const results = SAMPLE_EVENTS.summary.map(fieldToMoment('start'));
+    t.true(moment.isMoment(results[0].start));
+    t.true(moment.isMoment(results[1].start));
+});
+
+test('transforms.fieldToMoment - leaves other fields unchanged', t => {
+    const results = SAMPLE_EVENTS.summary.map(fieldToMoment('start'));
+    t.is(results[0].summary, SAMPLE_EVENTS.summary[0].summary);
+    t.is(results[1].summary, SAMPLE_EVENTS.summary[1].summary);
 });
 
 test('transforms.fieldsToMoments - converts dates to moments', t => {
-    const result = fieldsToMoments('start', 'end')(SAMPLE_EVENTS.summary);
-    t.true(moment.isMoment(result.start));
-    t.true(moment.isMoment(result.end));
+    const results = SAMPLE_EVENTS.summary.map(fieldsToMoments('start', 'end'));
+    t.true(moment.isMoment(results[0].start));
+    t.true(moment.isMoment(results[0].end));
+    t.true(moment.isMoment(results[1].start));
+    t.true(moment.isMoment(results[1].end));
+});
+
+test('transforms.fieldToMoment - leaves other fields unchanged', t => {
+    const results = SAMPLE_EVENTS.summary.map(fieldsToMoments('start', 'end'));
+    t.is(results[0].summary, SAMPLE_EVENTS.summary[0].summary);
+    t.is(results[1].summary, SAMPLE_EVENTS.summary[1].summary);
 });
 
 test('transforms.addDurationInHours - adds duration in hours', t => {
