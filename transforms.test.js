@@ -45,7 +45,7 @@ const SAMPLE_EVENTS = {
             start: new Date(9000),
             end: new Date(9000 + 1000 * 60 * 60),
             dtstamp: '20170210T052758Z',
-            uid: 'foobar123',
+            uid: 'foobar456',
             created: '20170209T003751Z',
             description: 'Description 2',
             'last-modified': '20170209T085207Z',
@@ -65,12 +65,14 @@ const SAMPLE_EVENTS = {
     ],
     summary: [
         {
+            uid: 'foobar123',
             start: new Date(0),
             end: new Date(1000 * 60 * 60),
             summary: 'Summary 1',
             description: 'Description 1',
         },
         {
+            uid: 'foobar456',
             start: new Date(9000),
             end: new Date(9000 + 1000 * 60 * 60),
             summary: 'Summary 2',

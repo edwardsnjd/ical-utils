@@ -7,6 +7,7 @@ const shallowClone = (obj) =>
 
 // Transform the given event to a simpler summary structure
 const selectSummary = (ev) => ({
+    uid: ev.uid,
     start: ev.start,
     end: ev.end,
     summary: ev.summary,
