@@ -1,14 +1,15 @@
 {
   "name": "ical-utils",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple utilities for dealing with iCal feeds in JS",
   "main": "index.js",
   "scripts": {
     "test": "ava"
   },
+  "repository": "edwardsnjd/ical-utils",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Nicholas Edwards",
+  "license": "MIT",
   "dependencies": {
     "ical": "^0.5.0",
     "moment": "^2.17.1",

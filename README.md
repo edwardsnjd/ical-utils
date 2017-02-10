@@ -16,11 +16,11 @@ Then require and use the utils:
 
 ```js
 const {map,filter} = require('lodash/fp');
-const {filters,transforms,getCalendar,utils} = require('ical-utils');
+const {getCalendar,filters,transforms,getCalendar,utils} = require('ical-utils');
 
-const CALENDAR_URL = 'http://foo/some-public-ical-url.ics';
+const CALENDAR_URL = 'https://www.nasa.gov/templateimages/redesign/calendar/iCal/nasa_calendar.ics';
 
-icalUtils.getCalendar(CALENDAR_URL)
+getCalendar(CALENDAR_URL)
     .then(filter(filters.summaryMatchesRegex(/^Interesting/i)))
     .then(map(transforms.selectSummary))
     .then(map(transforms.fieldsToMoments('start', 'end')))
