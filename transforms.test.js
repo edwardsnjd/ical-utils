@@ -1,7 +1,14 @@
 const test = require('ava');
 const moment = require('moment');
 
-const {selectSummary,fieldToMoment,fieldsToMoments,addDurationInHours,} = require('./transforms');
+const {
+    selectSummary,
+    fieldToMoment,
+    fieldsToMoments,
+    addDurationInHours,
+    fieldToIso,
+    fieldsToIso,
+} = require('./transforms');
 
 // SAMPLE DATA
 
@@ -99,6 +106,32 @@ test('transforms.fieldsToMoments - converts dates to moments', t => {
 
 test('transforms.fieldToMoment - leaves other fields unchanged', t => {
     const results = SAMPLE_EVENTS.summary.map(fieldsToMoments('start', 'end'));
+    t.is(results[0].summary, SAMPLE_EVENTS.summary[0].summary);
+    t.is(results[1].summary, SAMPLE_EVENTS.summary[1].summary);
+});
+
+test('transforms.fieldToIso - converts dates to ISO strings', t => {
+    const results = SAMPLE_EVENTS.summary.map(fieldToIso('start'));
+    t.true(typeof results[0].start === 'string');
+    t.true(typeof results[1].start === 'string');
+});
+
+test('transforms.fieldToIso - leaves other fields unchanged', t => {
+    const results = SAMPLE_EVENTS.summary.map(fieldToIso('start'));
+    t.is(results[0].summary, SAMPLE_EVENTS.summary[0].summary);
+    t.is(results[1].summary, SAMPLE_EVENTS.summary[1].summary);
+});
+
+test('transforms.fieldsToIso - converts dates to ISO strings', t => {
+    const results = SAMPLE_EVENTS.summary.map(fieldsToIso('start', 'end'));
+    t.true(typeof results[0].start === 'string');
+    t.true(typeof results[1].start === 'string');
+    t.true(typeof results[0].end === 'string');
+    t.true(typeof results[1].end === 'string');
+});
+
+test('transforms.fieldsToIso - leaves other fields unchanged', t => {
+    const results = SAMPLE_EVENTS.summary.map(fieldsToIso('start', 'end'));
     t.is(results[0].summary, SAMPLE_EVENTS.summary[0].summary);
     t.is(results[1].summary, SAMPLE_EVENTS.summary[1].summary);
 });

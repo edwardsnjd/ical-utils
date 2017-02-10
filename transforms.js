@@ -32,9 +32,21 @@ const addDurationInHours = (ev) =>
 const getDuration = (ev) =>
     ev.end - ev.start;
 
+// Return a transformer that converts the given date property to an ISO 8601 string
+const fieldToIso = (field) => (ev) =>
+    Object.assign(fieldToMoment(field)(ev), {
+        [field]: ev[field].toISOString(),
+    });
+
+// Return a transformer that converts the given date property to an ISO 8601 string
+const fieldsToIso = (...fieldNames) => (ev) =>
+    fieldNames.reduce((acc, field) => fieldToIso(field)(acc), shallowClone(ev));
+
 module.exports = {
     selectSummary,
     fieldToMoment,
     fieldsToMoments,
     addDurationInHours,
+    fieldToIso,
+    fieldsToIso,
 };
