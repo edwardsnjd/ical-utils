@@ -37,6 +37,7 @@ The functions are exposed in groups:
 const icalUtils = require('ical-utils');
 // icalUtils
 //    .getCalendar = () => {...}
+//    .getCalendarFile = () => {...}
 //    .filters = {...}
 //    .transforms = {...}
 //    .utils = {...}
